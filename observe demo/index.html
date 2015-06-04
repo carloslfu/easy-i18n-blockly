@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>observe objects example</title>
+  <!-- Blockly sources-->
+  <script src='../blockly/blockly_compressed.js'></script>
+  <script src="blocks/logic.js"></script>
+  <script src="blocks/loops.js"></script>
+  <script src="blocks/math.js"></script>
+  <script src="blocks/text.js"></script>
+  <script src="blocks/lists.js"></script>
+  <script src="blocks/colour.js"></script>
+  <script src="blocks/variables.js"></script>
+  <script src="blocks/procedures.js"></script>
+  <!-- Blockly-i18-hot-loader sources-->
+  <script src='../observe.js'></script>
+  <script src='../blockly-i18n-observer-loader.js'></script>
+  <script type="text/javascript">
+    var App = {}; // Namespace for the app
+    App.LANG = 'en'; // Default lang
+    var workspace;
+
+    function main() {
+      loadLang('../blockly/langs/', 'en', function() {
+        workspace = Blockly.inject('blocklyDiv',
+        {toolbox: document.getElementById('toolbox'), media: "../blockly/media/"});
+      });
+      // Sort languages alphabetically.
+      var languages = [];
+      for (var lang in App.LANGUAGE_NAME) {
+        languages.push([App.LANGUAGE_NAME[lang], lang]);
+      }
+      var comp = function(a, b) {
+        // Sort based on first argument ('English', 'Русский', '简体字', etc).
+        if (a[0] > b[0]) return 1;
+        if (a[0] < b[0]) return -1;
+        return 0;
+      };
+      languages.sort(comp);
+      // Populate the language selection menu.
+      var languageMenu = document.getElementById('languageMenu');
+      languageMenu.options.length = 0;
+      for (var i = 0; i < languages.length; i++) {
+        var tuple = languages[i];
+        var lang = tuple[tuple.length - 1];
+        var option = new Option(tuple[0], lang);
+        if (lang == App.LANG) {
+          option.selected = true;
+        }
+        languageMenu.options.add(option);
+      }
+      languageMenu.addEventListener('change', App.changeLanguage, true);
+    };
+
+    App.changeLanguage = function() {
+      var languageMenu = document.getElementById('languageMenu');
+      loadLang('../blockly/langs/', languageMenu.options[languageMenu.selectedIndex].value);
+    };
+    /**
+     * Lookup for names of supported languages.  Keys should be in ISO 639 format.
+     */
+    App.LANGUAGE_NAME = {
+      'ar': 'العربية',
+      'be-tarask': 'Taraškievica',
+      'br': 'Brezhoneg',
+      'ca': 'Català',
+      'cs': 'Česky',
+      'da': 'Dansk',
+      'de': 'Deutsch',
+      'el': 'Ελληνικά',
+      'en': 'English',
+      'es': 'Español',
+      'fa': 'فارسی',
+      'fr': 'Français',
+      'he': 'עברית',
+      'hrx': 'Hunsrik',
+      'hu': 'Magyar',
+      'ia': 'Interlingua',
+      'is': 'Íslenska',
+      'it': 'Italiano',
+      'ja': '日本語',
+      'ko': '한국어',
+      'mk': 'Македонски',
+      'ms': 'Bahasa Melayu',
+      'nb': 'Norsk Bokmål',
+      'nl': 'Nederlands, Vlaams',
+      'oc': 'Lenga d\'òc',
+      'pl': 'Polski',
+      'pms': 'Piemontèis',
+      'pt-br': 'Português Brasileiro',
+      'ro': 'Română',
+      'ru': 'Русский',
+      'sc': 'Sardu',
+      'sk': 'Slovenčina',
+      'sr': 'Српски',
+      'sv': 'Svenska',
+      'th': 'ภาษาไทย',
+      'tlh': 'tlhIngan Hol',
+      'tr': 'Türkçe',
+      'uk': 'Українська',
+      'vi': 'Tiếng Việt',
+      'zh-hans': '簡體中文',
+      'zh-hant': '正體中文'
+    };
+
+    /**
+     * List of RTL languages.
+     */
+    AppLANGUAGE_RTL = ['ar', 'fa', 'he'];
+
+  </script>
+</head>
+<body onload='main()'>
+  <select id="languageMenu"></select>
+  <div id='blocklyDiv' style="height: 80vh; width: 80vw;"></div>
+    <xml id="toolbox" style="display: none">
+    <category name="Logic">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+      <block type="logic_null"></block>
+      <block type="logic_ternary"></block>
+    </category>
+    <category name="Loops">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="controls_whileUntil"></block>
+      <block type="controls_for">
+        <value name="FROM">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+      <block type="controls_forEach"></block>
+      <block type="controls_flow_statements"></block>
+    </category>
+    <category name="Math">
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+      <block type="math_single"></block>
+      <block type="math_trig"></block>
+      <block type="math_constant"></block>
+      <block type="math_number_property"></block>
+      <block type="math_change">
+        <value name="DELTA">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+      <block type="math_round"></block>
+      <block type="math_on_list"></block>
+      <block type="math_modulo"></block>
+      <block type="math_constrain">
+        <value name="LOW">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="HIGH">
+          <block type="math_number">
+            <field name="NUM">100</field>
+          </block>
+        </value>
+      </block>
+      <block type="math_random_int">
+        <value name="FROM">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_number">
+            <field name="NUM">100</field>
+          </block>
+        </value>
+      </block>
+      <block type="math_random_float"></block>
+    </category>
+    <category name="Text">
+      <block type="text"></block>
+      <block type="text_join"></block>
+      <block type="text_append">
+        <value name="TEXT">
+          <block type="text"></block>
+        </value>
+      </block>
+      <block type="text_length"></block>
+      <block type="text_isEmpty"></block>
+      <block type="text_indexOf">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR" class="textVar">...</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_charAt">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR" class="textVar">...</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_getSubstring">
+        <value name="STRING">
+          <block type="variables_get">
+            <field name="VAR" class="textVar">...</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_changeCase"></block>
+      <block type="text_trim"></block>
+      <block type="text_print"></block>
+      <block type="text_prompt_ext">
+        <value name="TEXT">
+          <block type="text"></block>
+        </value>
+      </block>
+    </category>
+    <category name="Lists">
+      <block type="lists_create_empty"></block>
+      <block type="lists_create_with"></block>
+      <block type="lists_repeat">
+        <value name="NUM">
+          <block type="math_number">
+            <field name="NUM">5</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_length"></block>
+      <block type="lists_isEmpty"></block>
+      <block type="lists_indexOf">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR" class="listVar">...</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_getIndex">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR" class="listVar">...</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_setIndex">
+        <value name="LIST">
+          <block type="variables_get">
+            <field name="VAR" class="listVar">...</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_getSublist">
+        <value name="LIST">
+          <block type="variables_get">
+            <field name="VAR" class="listVar">...</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_split">
+        <value name="DELIM">
+          <block type="text">
+            <field name="TEXT">,</field>
+          </block>
+        </value>
+      </block>
+    </category>
+    <category name="Colour">
+      <block type="colour_picker"></block>
+      <block type="colour_random"></block>
+      <block type="colour_rgb">
+        <value name="RED">
+          <block type="math_number">
+            <field name="NUM">100</field>
+          </block>
+        </value>
+        <value name="GREEN">
+          <block type="math_number">
+            <field name="NUM">50</field>
+          </block>
+        </value>
+        <value name="BLUE">
+          <block type="math_number">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
+      <block type="colour_blend">
+        <value name="COLOUR1">
+          <block type="colour_picker">
+            <field name="COLOUR">#ff0000</field>
+          </block>
+        </value>
+        <value name="COLOUR2">
+          <block type="colour_picker">
+            <field name="COLOUR">#3333ff</field>
+          </block>
+        </value>
+        <value name="RATIO">
+          <block type="math_number">
+            <field name="NUM">0.5</field>
+          </block>
+        </value>
+      </block>
+    </category>
+    <sep></sep>
+    <category name="Variables" custom="VARIABLE"></category>
+    <category name="Functions" custom="PROCEDURE"></category>
+  </xml>
+</body>
+</html>
