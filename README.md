@@ -39,4 +39,4 @@ loadLangJSON('path2i18n/', 'es', 'Blockly.Msg', function() {  // must have a fil
 });
 ```
 
-[demo-page-git]: https://github.com/carloslfu/blob/master/easy-i18n-blockly/simple%20demo/index.html
+[demo-page-git]: https://github.com/carloslfu/easy-i18n-blockly/blob/master/simple%20demo/index.html
