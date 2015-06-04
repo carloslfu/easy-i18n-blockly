@@ -4,7 +4,7 @@ Useful functions for the translation of the Blockly blocks without recharging th
 
 See a demo of the blockly core blocks hot translating [here][live-demo].
 
-[live-demo]: https://carloslfu.github.io/Blockly-i18n-hot-loader/simple demo/
+[live-demo]: https://carloslfu.github.io/Blockly-i18n-hot-loader/simple%demo/
 
 ##Getting Started
 
@@ -39,4 +39,4 @@ loadLangJSON('path2i18n/', 'es', 'Blockly.Msg', function() {  // must have a fil
 });
 ```
 
-[demo-page-git]: https://github.com/carloslfu/blob/master/Blockly-i18n-hot-loader/simple demo/index.html
+[demo-page-git]: https://github.com/carloslfu/blob/master/Blockly-i18n-hot-loader/simple%demo/index.html
