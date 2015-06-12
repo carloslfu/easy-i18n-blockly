@@ -12,7 +12,7 @@ For a complete and functional example see the demo in `simple demo/` folder.
 
 Here is an overview of how get started with the library:
 
-Include the `observe.js` and `blockly-i18-hot-loader.js` files after the blockly files (blockly_compressed ...), see the [simple demo/index.html][demo-page-git] file.
+Include `blockly-i18-hot-loader.js` file after the blockly files (blockly_compressed ...), see the [simple demo/index.html][demo-page-git] file.
 
 Charge the language after create a blockly instance:
 ```
